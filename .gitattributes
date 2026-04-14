@@ -1,0 +1,36 @@
+# Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.DS_Store
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Docker
+postgres_data/
+.env
+*.pid
+
+# Application
+logs/
+*.dump
+*.hprof
+*.heapdump
+
+# OS
+Thumbs.db
+*.swp
+*.swo
+*~
