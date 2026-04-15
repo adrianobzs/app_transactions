@@ -1,6 +1,45 @@
 # financial_transactions
 
-Este projeto é um serviço Spring Boot para gerenciamento de transações financeiras com PostgreSQL.
+Esta é uma simples aplicação financeira contemplando unicamente 2 (duas) entidades básicas de domínio com seus respectivos atributos:
+1. Account (..)
+3. Transaction (..)
+
+O sistema é um backend e fornece serviços tais como:
+1. Cadastrar uma nova conta
+2. Consultar uma conta por seu ID
+3. Registrar Transações de 4 (quatro) tipos diferentes (..)
+4. Consultar uma Transação com base em seu ID
+
+Foi adotado o padrão já conhecido para aplicações SpringBoot onde define as seguintes camadas
+1. Controllers -> responsáveis por publicar os endpoints e atender requisições do FrontEnd.
+2. Services -> onde localizam-se as lógicas de negócios e tratamento de entidades
+3. Repository -> camada que interage com a infra-estrutura de persistência (Banco de Dados)
+4. Banco de Dados -> Persistência de dados com PostgreSQL 15
+
+Algumas outras implementações foram utilizadas como acessórias e seguem os padrões já conhecidos
+1. Uso de classes DTO (Data Transfer Object) para representar informações de entidades de domínio sem expo-las totalmente, servindo de uma espécie de "filtro" de dados. Utilizados tanto na aquisição de dados (requests) quanto na sua exposição (responses)
+2. Uso de EntityMapper : uma classe utilitária fundamental para prover as transformações entre entre Entidade -> DTO e DTO -> Entidade
+3. Exceçoes de Negócio : criação de um conjunto customizado de exceções e uma classe genérica responsável por capturá-las, registrar logs e retornar código de erro HTTP e uma mensagem mais amigável.
+
+Containerização
+
+A aplicação como um todo é executada através dos seguintes componentes:
+1. Container de Aplicação com StringBoot
+2. Container de Dados com o Postgres
+3. Volume de dados externo para manutenção de dados durante o ciclo códifica - build - deploy, preservando os dados mesmo que o container de banco seja removido.
+4. Rede local via Docker para garantir a comunicação entre os containers
+
+Sendo assim, precisamos fazer uso do Docker Compose para orquestrar esses elementos.
+
+Segue um roteiro resumido de como rodar localmente via Docker a aplicaçao:
+
+1. Clone o Repositório
+2. Rode o comando para preparar o ambiente containerizado localmente (..)
+3. Acesse um dos seguintes links para visualizar e interagir com a API dos serviços. Recomendaos Postman ou o proprio SwaggerUI para enviar suas requisições.
+   
+   
+
+
 
 ## Visão geral
 
