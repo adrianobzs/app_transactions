@@ -1,7 +1,9 @@
 package com.pismo.transaction.exception;
 
+import java.util.UUID;
+
 public class AccountNotFoundException extends BusinessException {
-    public AccountNotFoundException(Long accountId) {
+    public AccountNotFoundException(UUID accountId) {
         super("Account not found with id: " + accountId);
     }
 

@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(name = "accounts")
@@ -17,8 +20,8 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+    private UUID id;
 
     @Column(name = "document_number", nullable = false, unique = true, length = 20)
     private String documentNumber;

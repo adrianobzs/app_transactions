@@ -9,6 +9,9 @@ import com.pismo.transaction.exception.AccountNotFoundException;
 import com.pismo.transaction.exception.DupllicateAccountException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +41,7 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public AccountResponseDTO getAccountById(Long accountId) {
+    public AccountResponseDTO getAccountById(UUID accountId) {
         log.info("Fetching account with id: {}", accountId);
 
         Account account = accountRepository.findById(accountId)
@@ -51,7 +54,7 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public Account findAccountEntityById(Long accountId) {
+    public Account findAccountEntityById(UUID accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
     }

@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 @Data
 @Builder
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TransactionResponseDTO {
 
-    private Long accountId;
+    private UUID accountId;
     private Long operationTypeId;
     private BigDecimal amount;
 

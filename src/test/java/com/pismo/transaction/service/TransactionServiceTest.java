@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -52,23 +53,23 @@ class TransactionServiceTest {
 
     @BeforeEach
     void setUp() {
-        requestDTO = new TransactionRequestDTO(1L, 1L, BigDecimal.valueOf(100));
+        UUID uuid = UUID.randomUUID();
+        requestDTO = new TransactionRequestDTO(uuid, 1L, BigDecimal.valueOf(100));
 
         account = new Account();
-        account.setId(1L);
+        account.setId(uuid);
         account.setDocumentNumber("123456789");
 
         operationType = new OperationType(1L, "PAYMENT", false);
 
         transaction = new Transaction();
-        transaction.setId(1L);
+        transaction.setId(UUID.randomUUID());
         transaction.setAccount(account);
         transaction.setOperationType(operationType);
         transaction.setAmount(BigDecimal.valueOf(100));
         transaction.setEventDate(LocalDateTime.now());
 
-        transactionResponseDTO = TransactionResponseDTO.builder()
-                .accountId(1L)
+        transactionResponseDTO = TransactionResponseDTO.builder().accountId(uuid)
                 .operationTypeId(1L)
                 .amount(BigDecimal.valueOf(100))
                 .build();
@@ -76,7 +77,7 @@ class TransactionServiceTest {
 
     @Test
     void testCreateTransactionSuccess() {
-        when(accountService.findAccountEntityById(1L)).thenReturn(account);
+        when(accountService.findAccountEntityById(account.getId())).thenReturn(account);
         when(operationTypeRepository.findById(1L)).thenReturn(Optional.of(operationType));
         when(mapper.toEntity(requestDTO, account, operationType)).thenReturn(transaction);
         when(transactionRepository.save(transaction)).thenReturn(transaction);
@@ -85,7 +86,7 @@ class TransactionServiceTest {
         var result = transactionService.createTransaction(requestDTO);
 
         assertThat(result).isNotNull();
-        assertThat(result.getAccountId()).isEqualTo(1L);
+        assertThat(result.getAccountId()).isEqualTo(account.getId());
         assertThat(result.getAmount()).isEqualTo(BigDecimal.valueOf(100));
         verify(transactionRepository).save(transaction);
     }
@@ -93,7 +94,7 @@ class TransactionServiceTest {
     @Test
     void testCreateTransactionInvalidAmount() {
         requestDTO.setAmount(BigDecimal.ZERO);
-        when(accountService.findAccountEntityById(1L)).thenReturn(account);
+        when(accountService.findAccountEntityById(account.getId())).thenReturn(account);
         when(operationTypeRepository.findById(1L)).thenReturn(Optional.of(operationType));
 
         assertThatThrownBy(() -> transactionService.createTransaction(requestDTO))
@@ -104,7 +105,7 @@ class TransactionServiceTest {
 
     @Test
     void testCreateTransactionOperationTypeNotFound() {
-        when(accountService.findAccountEntityById(1L)).thenReturn(account);
+        when(accountService.findAccountEntityById(account.getId())).thenReturn(account);
         when(operationTypeRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> transactionService.createTransaction(requestDTO))
@@ -115,10 +116,11 @@ class TransactionServiceTest {
 
     @Test
     void testGetTransactionByIdSuccess() {
-        when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
+        UUID uuid = UUID.randomUUID();
+        when(transactionRepository.findById(uuid)).thenReturn(Optional.of(transaction));
         when(mapper.toResponseDTO(transaction)).thenReturn(transactionResponseDTO);
 
-        var result = transactionService.getTransactionById(1L);
+        var result = transactionService.getTransactionById(uuid);
 
         assertThat(result).isNotNull();
         assertThat(result.getOperationTypeId()).isEqualTo(1L);
@@ -127,9 +129,10 @@ class TransactionServiceTest {
 
     @Test
     void testGetTransactionByIdNotFound() {
-        when(transactionRepository.findById(999L)).thenReturn(Optional.empty());
+        UUID uuid = UUID.randomUUID();
+        when(transactionRepository.findById(uuid)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> transactionService.getTransactionById(999L))
+        assertThatThrownBy(() -> transactionService.getTransactionById(uuid))
                 .isInstanceOf(TransactionNotFoundException.class);
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
@@ -37,7 +39,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Found Account."),
             @ApiResponse(responseCode = "404", description = "Not Found Account.")
     })
-    public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable Long accountId) {
+    public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable UUID accountId) {
         AccountResponseDTO response = accountService.getAccountById(accountId);
         return ResponseEntity.ok(response);
     }

@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +42,7 @@ public class TransactionController {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "404", description = "Transaction Not Found.")
     })
-    public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable Long transactionId) {
+    public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable UUID transactionId) {
         TransactionResponseDTO response = transactionService.getTransactionById(transactionId);
         return ResponseEntity.ok(response);
     }

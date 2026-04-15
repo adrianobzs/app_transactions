@@ -12,6 +12,9 @@ import com.pismo.transaction.repository.OperationTypeRepository;
 import com.pismo.transaction.exception.OperationTypeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +57,7 @@ public class TransactionService {
     }
 
     @Transactional(readOnly = true)
-    public TransactionResponseDTO getTransactionById(Long transactionId) {
+    public TransactionResponseDTO getTransactionById(UUID transactionId) {
         log.info("Fetching transaction with id: {}", transactionId);
 
         Transaction transaction = transactionRepository.findById(transactionId)

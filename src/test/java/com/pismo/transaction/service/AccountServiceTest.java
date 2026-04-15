@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -41,7 +42,7 @@ class AccountServiceTest {
         requestDTO.setDocumentNumber("123456789");
 
         account = new Account();
-        account.setId(1L);
+        account.setId(UUID.randomUUID());
         account.setDocumentNumber("123456789");
 
         accountResponseDTO = AccountResponseDTO.builder()
@@ -74,10 +75,10 @@ class AccountServiceTest {
 
     @Test
     void testGetAccountByIdSuccess() {
-        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
+        when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
         when(mapper.toResponseDTO(any(Account.class))).thenReturn(accountResponseDTO);
 
-        var result = accountService.getAccountById(1L);
+        var result = accountService.getAccountById(account.getId());
 
         assertThat(result).isNotNull();
         assertThat(result.getDocumentNumber()).isEqualTo("123456789");
@@ -85,9 +86,9 @@ class AccountServiceTest {
 
     @Test
     void testGetAccountByIdNotFound() {
-        when(accountRepository.findById(999L)).thenReturn(Optional.empty());
+        when(accountRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> accountService.getAccountById(999L))
+        assertThatThrownBy(() -> accountService.getAccountById(UUID.randomUUID()))
                 .isInstanceOf(AccountNotFoundException.class);
     }
 }
