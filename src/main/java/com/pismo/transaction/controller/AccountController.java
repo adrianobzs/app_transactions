@@ -2,6 +2,7 @@ package com.pismo.transaction.controller;
 
 import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
+import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
 import com.pismo.transaction.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,8 +38,8 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Found Account."),
             @ApiResponse(responseCode = "404", description = "Not Found Account.")
     })
-    public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable Long accountId) {
-        AccountResponseDTO response = accountService.getAccountById(accountId);
+    public ResponseEntity<AccountResponseDetailDTO> getAccount(@PathVariable Long accountId) {
+        AccountResponseDetailDTO response = accountService.getAccountById(accountId);
         return ResponseEntity.ok(response);
     }
 }

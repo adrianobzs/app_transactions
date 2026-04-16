@@ -3,6 +3,7 @@ package com.pismo.transaction.dto.mapper;
 import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.request.TransactionRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
+import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
 import com.pismo.transaction.dto.response.TransactionResponseDTO;
 import com.pismo.transaction.model.Account;
 import com.pismo.transaction.model.OperationType;
@@ -26,6 +27,12 @@ public class EntityMapper {
                 .build();
     }
 
+    public AccountResponseDetailDTO toResponseDetailedDTO(Account account) {
+        return AccountResponseDetailDTO.builder()
+                .accountId(account.getId())
+                .documentNumber(account.getDocumentNumber())
+                .build();
+    }
 
     public Transaction toEntity(TransactionRequestDTO requestDTO, Account account, OperationType operationType) {
         Transaction transaction = new Transaction();

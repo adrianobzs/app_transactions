@@ -3,6 +3,7 @@ package com.pismo.transaction.service;
 import com.pismo.transaction.dto.mapper.EntityMapper;
 import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
+import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
 import com.pismo.transaction.exception.DupllicateAccountException;
 import com.pismo.transaction.model.Account;
 import com.pismo.transaction.repository.AccountRepository;
@@ -34,6 +35,7 @@ class AccountServiceTest {
     private Account account;
     private AccountRequestDTO requestDTO;
     private AccountResponseDTO accountResponseDTO;
+    private AccountResponseDetailDTO accountResponseDetailDTO;
 
     @BeforeEach
     void setUp() {
@@ -46,6 +48,10 @@ class AccountServiceTest {
 
         accountResponseDTO = AccountResponseDTO.builder()
                 .documentNumber("123456789")
+                .build();
+        accountResponseDetailDTO = AccountResponseDetailDTO.builder()
+                .documentNumber("123456789")
+                .accountId(1L)
                 .build();
     }
 
@@ -75,7 +81,7 @@ class AccountServiceTest {
     @Test
     void testGetAccountByIdSuccess() {
         when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
-        when(mapper.toResponseDTO(any(Account.class))).thenReturn(accountResponseDTO);
+        when(mapper.toResponseDetailedDTO(any(Account.class))).thenReturn(accountResponseDetailDTO);
 
         var result = accountService.getAccountById(1L);
 
