@@ -3,6 +3,7 @@ package com.pismo.transaction.service;
 import com.pismo.transaction.dto.mapper.EntityMapper;
 import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
+import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
 import com.pismo.transaction.exception.DupllicateAccountException;
 import com.pismo.transaction.model.Account;
 import com.pismo.transaction.repository.AccountRepository;
@@ -35,6 +36,7 @@ class AccountServiceTest {
     private Account account;
     private AccountRequestDTO requestDTO;
     private AccountResponseDTO accountResponseDTO;
+    private AccountResponseDetailDTO accountResponseDetailDTO;
 
     @BeforeEach
     void setUp() {
@@ -47,6 +49,10 @@ class AccountServiceTest {
 
         accountResponseDTO = AccountResponseDTO.builder()
                 .documentNumber("123456789")
+                .build();
+        accountResponseDetailDTO = AccountResponseDetailDTO.builder()
+                .documentNumber("123456789")
+                .accountId(UUID.randomUUID())
                 .build();
     }
 

@@ -2,6 +2,7 @@ package com.pismo.transaction.controller;
 
 import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
+import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
 import com.pismo.transaction.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
