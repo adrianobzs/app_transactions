@@ -40,8 +40,8 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Found Account."),
             @ApiResponse(responseCode = "404", description = "Not Found Account.")
     })
-    public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable UUID accountId) {
-        AccountResponseDTO response = accountService.getAccountById(accountId);
+    public ResponseEntity<AccountResponseDetailDTO> getAccount(@PathVariable UUID accountId) {
+        AccountResponseDetailDTO response = accountService.getAccountById(accountId);
         return ResponseEntity.ok(response);
     }
 }

@@ -51,7 +51,7 @@ public class AccountService {
                     return new AccountNotFoundException(accountId);
                 });
 
-        return mapper.toResponseDTO(account);
+        return mapper.toResponseDetailedDTO(account);
     }
 
     @Transactional(readOnly = true)
