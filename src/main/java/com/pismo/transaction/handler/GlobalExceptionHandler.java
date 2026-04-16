@@ -27,7 +27,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("Not Found")
                 .message(ex.getMessage())
-                .path(getPath())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
@@ -40,7 +39,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("Not Found")
                 .message(ex.getMessage())
-                .path(getPath())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
@@ -132,12 +130,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("Not Found")
                 .message("The requested endpoint was not found")
-                .path(ex.getRequestURL())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
-    private String getPath() {
-        // Implementação simplificada - em produção você pode obter do request
-        return "N/A";
     }
 }
