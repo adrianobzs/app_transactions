@@ -81,8 +81,8 @@ class AccountServiceTest {
 
     @Test
     void testGetAccountByIdSuccess() {
-        when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
-        when(mapper.toResponseDTO(any(Account.class))).thenReturn(accountResponseDTO);
+        when(accountRepository.findById(any(UUID.class))).thenReturn(Optional.of(account));
+        when(mapper.toResponseDetailedDTO(any(Account.class))).thenReturn(accountResponseDetailDTO);
 
         var result = accountService.getAccountById(account.getId());
 

@@ -42,7 +42,7 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public AccountResponseDTO getAccountById(UUID accountId) {
+    public AccountResponseDetailDTO getAccountById(UUID accountId) {
         log.info("Fetching account with id: {}", accountId);
 
         Account account = accountRepository.findById(accountId)
