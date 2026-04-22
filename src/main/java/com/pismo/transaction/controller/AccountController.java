@@ -3,6 +3,7 @@ package com.pismo.transaction.controller;
 import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
 import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
+import com.pismo.transaction.dto.response.TransactionResponseDTO;
 import com.pismo.transaction.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -43,5 +46,12 @@ public class AccountController {
     public ResponseEntity<AccountResponseDetailDTO> getAccount(@PathVariable UUID accountId) {
         AccountResponseDetailDTO response = accountService.getAccountById(accountId);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{accountId}/transactions")
+    public ResponseEntity<List<TransactionResponseDTO>> getTransactionsByAccountId(@PathVariable UUID accountId) {
+        List<TransactionResponseDTO> transactions;
+        transactions = accountService.getTransactionsByAccountId(accountId);
+        return ResponseEntity.ok(transactions);
     }
 }

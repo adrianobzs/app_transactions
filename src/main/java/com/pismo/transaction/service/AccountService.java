@@ -4,13 +4,17 @@ import com.pismo.transaction.dto.request.AccountRequestDTO;
 import com.pismo.transaction.dto.response.AccountResponseDTO;
 import com.pismo.transaction.dto.mapper.EntityMapper;
 import com.pismo.transaction.dto.response.AccountResponseDetailDTO;
+import com.pismo.transaction.dto.response.TransactionResponseDTO;
 import com.pismo.transaction.model.Account;
+import com.pismo.transaction.model.Transaction;
 import com.pismo.transaction.repository.AccountRepository;
 import com.pismo.transaction.exception.AccountNotFoundException;
 import com.pismo.transaction.exception.DupllicateAccountException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -58,5 +62,19 @@ public class AccountService {
     public Account findAccountEntityById(UUID accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
+    }
+
+    @Transactional
+    public List<TransactionResponseDTO> getTransactionsByAccountId(UUID accountId) {
+        log.info("Fetching transactions by Account Id: {}", accountId);
+        Account account = accountRepository.findById(accountId).orElseThrow(
+                () -> new AccountNotFoundException("Account Not Found Id: " + accountId)
+        );
+        List<TransactionResponseDTO> transactionResponseDTOS = new ArrayList<>();
+        for (Transaction transaction : account.getTransactions()) {
+            TransactionResponseDTO transactionResponseDTO = mapper.toResponseDTO(transaction);
+            transactionResponseDTOS.add(transactionResponseDTO);
+        }
+        return transactionResponseDTOS;
     }
 }
