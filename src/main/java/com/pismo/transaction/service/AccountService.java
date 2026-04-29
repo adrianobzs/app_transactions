@@ -77,4 +77,11 @@ public class AccountService {
         }
         return transactionResponseDTOS;
     }
+
+    @Transactional
+    public Account processTransaction(Account account, Transaction transaction) {
+        account.updateAvailableCreditLimit(transaction.getAmount());
+        accountRepository.save(account);
+        return account;
+    }
 }

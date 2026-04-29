@@ -48,11 +48,14 @@ public class TransactionService {
 
         Transaction transaction = mapper.toEntity(requestDTO, account, operationType);
 
+        accountService.processTransaction(account,transaction);
+
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         log.info("Transaction created successfully with id: {}, final amount: {}",
                 savedTransaction.getId(), savedTransaction.getAmount());
 
+        log.info("New Available Credit Limit: {} for the Account Id: {}", account.getAvailableCreditLimit(), account.getId());
         return mapper.toResponseDTO(savedTransaction);
     }
 

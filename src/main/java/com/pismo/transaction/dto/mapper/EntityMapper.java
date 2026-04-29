@@ -31,6 +31,7 @@ public class EntityMapper {
         return AccountResponseDetailDTO.builder()
                 .accountId(account.getId())
                 .documentNumber(account.getDocumentNumber())
+                .availableCreditLimit(account.getAvailableCreditLimit())
                 .build();
     }
 

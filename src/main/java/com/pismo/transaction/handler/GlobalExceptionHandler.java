@@ -19,6 +19,18 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(CreditLimitExceeded.class)
+    public ResponseEntity<ApiErrorResponse> handleCreditLimitExceeded(CreditLimitExceeded ex) {
+        log.error(ex.getMessage());
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.PRECONDITION_FAILED.value())
+                .error("Transaction Failed")
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(error);
+    }
+
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleAccountNotFound(AccountNotFoundException ex) {
         log.error("Account not found: {}", ex.getMessage());
